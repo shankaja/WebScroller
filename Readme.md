@@ -1,4 +1,4 @@
-Job description comparison tool
+Web crawler tool
 
 How to run
 
