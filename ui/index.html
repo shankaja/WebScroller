@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- CSS only -->
+<!-- CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -12,6 +12,7 @@
         if (inputVal != "") {
             if (confirm(inputVal)) {
                 var mainContainer = document.getElementById("responseViewport");
+                document.getElementById("submitBtn").disabled = true;
                 mainContainer.innerHTML = "";
 
                 const response = await fetch(baseurl, {
@@ -25,41 +26,23 @@
 
                 const actualResponse = await response.json().then(data => {
                     if (data.success) {
-                        var title = document.createElement("div");
-                        title.innerHTML = "Title of the document : " + data.result.title;
-                        mainContainer.appendChild(title);
+                        createElement("Title of the document : " + data.result.title);
 
-                        var htmlVersion = document.createElement("div");
-                        htmlVersion.innerHTML = "HTML Version : " + data.result.html_version;
-                        mainContainer.appendChild(htmlVersion);
+                        createElement("HTML Version : " + data.result.html_version);
 
-                        var loginExist = document.createElement("div");
-                        loginExist.innerHTML = "Login form exist : " + data.result.login_exist;
-                        mainContainer.appendChild(loginExist);
+                        createElement("Login form exist : " + data.result.login_exist);
 
-                        var h1 = document.createElement("div");
-                        h1.innerHTML = "H1 tags : " + data.result.h1;
-                        mainContainer.appendChild(h1);
+                        createElement("H1 tags : " + data.result.h1);
 
-                        var h2 = document.createElement("div");
-                        h2.innerHTML = "H2 tags : " + data.result.h2;
-                        mainContainer.appendChild(h2);
+                        createElement("H2 tags : " + data.result.h2);
 
-                        var h3 = document.createElement("div");
-                        h3.innerHTML = "H3 tags : " + data.result.h3;
-                        mainContainer.appendChild(h3);
+                        createElement("H3 tags : " + data.result.h3);
 
-                        var h4 = document.createElement("div");
-                        h4.innerHTML = "H4 tags : " + data.result.h4;
-                        mainContainer.appendChild(h4);
+                        createElement("H4 tags : " + data.result.h4);
 
-                        var h5 = document.createElement("div");
-                        h5.innerHTML = "H5 tags : " + data.result.h5;
-                        mainContainer.appendChild(h5);
+                        createElement("H5 tags : " + data.result.h5);
 
-                        var h6 = document.createElement("div");
-                        h6.innerHTML = "H6 tags : " + data.result.h6;
-                        mainContainer.appendChild(h6);
+                        createElement("H6 tags : " + data.result.h6);
 
                         var table = document.createElement("table")
                         table.className = "table table-dark"
@@ -83,13 +66,20 @@
                     }
                 });
 
-
+                document.getElementById("submitBtn").disabled = false;
             }
         }
         else {
             alert("Please enter a URL in the text field to continue..")
         }
     };
+
+    function createElement(innerHtml) {
+        var child = document.createElement("div");
+        child.className = "form-control";
+        child.innerHTML = innerHtml;
+        document.getElementById("responseViewport").appendChild(child);
+    }
 </script>
 
 <head>
@@ -104,8 +94,8 @@
         <h1 class="mb-3">Welcome to the web crawler!</h1>
         <div class="form-group">
             <label for="inputUrl">Please input a weblink to analyze!</label>
-            <input class="form-control input-lg" type="text" id="inputUrl" name="fname" ><br><br>
-            <input type="submit" value="Submit" onclick="analyzePage()" class="btn btn-dark">
+            <input class="form-control input-lg" type="text" id="inputUrl" name="fname"><br><br>
+            <input id="submitBtn" type="submit" value="Submit" onclick="analyzePage()" class="btn btn-dark">
         </div>
     </div>
     </br></br>
