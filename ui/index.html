@@ -100,14 +100,17 @@
 </head>
 
 <body>
-    <div class="container-fluid">
-        <h1>Welcome to URL scraper!</h1>
-        <p>Please input a weblink to analyze!</p>
-        <input type="text" id="inputUrl" name="fname" style="width: 200px;"><br><br>
-        <input type="submit" value="Submit" onclick="analyzePage()">
+    <div class="container container-fluid form-group">
+        <h1 class="mb-3">Welcome to the web crawler!</h1>
+        <div class="form-group">
+            <label for="inputUrl">Please input a weblink to analyze!</label>
+            <input class="form-control input-lg" type="text" id="inputUrl" name="fname" ><br><br>
+            <input type="submit" value="Submit" onclick="analyzePage()" class="btn btn-dark">
+        </div>
     </div>
-    <div class="container-fluid text-left">
-        <div id="responseViewport" width="40"></div>
+    </br></br>
+    <div class="container">
+        <div id="responseViewport"></div>
     </div>
 </body>
 

@@ -74,6 +74,7 @@ func crawl(node *html.Node, doc *model.HtmlDocument) (*model.HtmlDocument, error
 							// util.IsReachable(attr.Val)
 							doc.ExternalLinks = append(doc.ExternalLinks, *tempLink)
 						} else {
+							tempLink.Accessible = true
 							doc.InternalLinks = append(doc.InternalLinks, *tempLink)
 						}
 						break
