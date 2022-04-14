@@ -10,7 +10,7 @@
     async function analyzePage() {
         var inputVal = document.getElementById("inputUrl").value;
         if (inputVal != "") {
-            if (confirm(inputVal)) {
+            if (confirm("Do you want to crawl this website? "+inputVal)) {
                 var mainContainer = document.getElementById("responseViewport");
                 document.getElementById("submitBtn").disabled = true;
                 mainContainer.innerHTML = "";

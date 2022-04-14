@@ -67,7 +67,7 @@ func crawl(node *html.Node, doc *model.HtmlDocument) (*model.HtmlDocument, error
 			doc.H6Count++
 		case "a":
 			for _, attr := range node.Parent.Attr {
-				if strings.ToLower(attr.Key) == "href" {
+				if strings.ToLower(attr.Key) == "href" && attr.Val != "" {
 					if u, err := url.Parse(attr.Val); err == nil {
 						tempLink := &model.Link{Url: attr.Val, Accessible: util.IsReachable(attr.Val)}
 						if u.Host != "" && u.Host != doc.Host {
