@@ -15,6 +15,5 @@ func NewHealthController(c *config.Config) *HealthController {
 
 func (h *HealthController) GetHealth(w http.ResponseWriter, r *http.Request) {
 
-	// log.Printf("Health check with ctx")
 	w.Write([]byte("Up and running"))
 }

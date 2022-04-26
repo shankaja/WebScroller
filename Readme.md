@@ -10,7 +10,7 @@ Install docker on your local machine or the deployment environment
 ```
 docker build -t web-crawler .
 ```
-**Step 2: **Run the service by using the following command
+**Step 2:** Run the service by using the following command
 
 ```
 docker run -d -p 8000:8000 web-crawler
