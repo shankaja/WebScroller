@@ -27,7 +27,6 @@ func (h *WebController) Index(w http.ResponseWriter, r *http.Request) {
 func (h *WebController) Analyze(w http.ResponseWriter, r *http.Request) {
 	var url model.Request
 	err := json.NewDecoder(r.Body).Decode(&url)
-	// fmt.Println(url)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

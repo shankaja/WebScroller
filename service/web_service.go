@@ -43,8 +43,31 @@ func (h *WebPageService) Analyze(uri string) (*model.HtmlDocument, error) {
 	}
 
 	parsedDoc, _ := html.Parse(bytes.NewBuffer(docBytes))
-	return crawl(parsedDoc, &doc)
 
+	// Crawling the document details without checking the link accesibility
+	dc, err := crawl(parsedDoc, &doc)
+	if err != nil {
+		return nil, err
+	}
+
+	// checking the link accessibility
+	updateAccesibility(dc)
+	return dc, nil
+}
+
+func updateAccesibility(document *model.HtmlDocument) {
+	updateAccesibilityForLinks(document.ExternalLinks)
+	updateAccesibilityForLinks(document.InternalLinks)
+}
+
+func updateAccesibilityForLinks(links []model.Link) {
+	for _, v := range links {
+		c := make(chan bool)
+		go func() {
+			c <- util.IsReachable(v.Url)
+		}()
+		v.Accessible = <-c
+	}
 }
 
 func crawl(node *html.Node, doc *model.HtmlDocument) (*model.HtmlDocument, error) {
@@ -69,9 +92,8 @@ func crawl(node *html.Node, doc *model.HtmlDocument) (*model.HtmlDocument, error
 			for _, attr := range node.Parent.Attr {
 				if strings.ToLower(attr.Key) == "href" && attr.Val != "" {
 					if u, err := url.Parse(attr.Val); err == nil {
-						tempLink := &model.Link{Url: attr.Val, Accessible: util.IsReachable(attr.Val)}
+						tempLink := &model.Link{Url: attr.Val}
 						if u.Host != "" && u.Host != doc.Host {
-							// util.IsReachable(attr.Val)
 							doc.ExternalLinks = append(doc.ExternalLinks, *tempLink)
 						} else {
 							tempLink.Accessible = true
