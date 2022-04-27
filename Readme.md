@@ -18,7 +18,7 @@ docker run -d -p 8000:8000 web-crawler
 
 PS: you can select your own port mapping by modifying the port on `config.yml`
 
-**Step 3: **Navigate to the following url on your favourite browser
+**Step 3:** Navigate to the following url on your favourite browser
 
 ```
 localhost:8000\index
